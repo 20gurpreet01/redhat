@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+string ans;
+string s;
+int target;
+
+void backtrack(int i, const string& path, long resSoFar, long prevNum) {
+    if (i == s.length()) {
+        if (resSoFar == target) ans = path;
+        return;
+    }
+    string numStr;
+    long num = 0;
+    for (int j = i; j < s.length(); j++) {
+        if (j > i && s[i] == '0') break; // Skip leading zero number
+        numStr += s[j];
+        num = num * 10 + s[j] - '0';
+        if (i == 0) {
+            backtrack(j + 1, path + numStr, num, num); // First num, pick it without adding any operator!
+        } else {
+            backtrack(j + 1, path + "-" + numStr, resSoFar - num, -num);
+            backtrack(j + 1, path + "+" + numStr, resSoFar + num, num);
+        }
+    }
+}
+
+
+string expressionEvaluation(int tar = 100) {
+    string st = "123456789";
+    s = st;
+    target = tar;
+    backtrack( 0, "", 0, 0);
+    return ans;
+}
+
+int main() {
+    cout << expressionEvaluation(100) << endl;
+    return 0;
+}

@@ -1,0 +1,17 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isAnagram(string a, string b) {
+    unordered_map<char, int> mp;
+    for (auto i : a) mp[i]++;
+    for (auto i : b) mp[i]--;
+    for (auto i : mp) {
+        if (i.second != 0) return false;
+    }
+    return true;
+}
+
+int main() {
+    cout << isAnagram("mary", "aarmy") << endl;
+    return 0;
+}
